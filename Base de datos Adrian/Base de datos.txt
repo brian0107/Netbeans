@@ -1,0 +1,94 @@
+// Crear una nueva base de datos
+create database "nombre de la base" ;
+
+// Seleccionar la base de datos a usar
+use "Nombre de la base" ;
+
+//Creacion de una tabla
+ create table tblAlumnos(alumID int PRIMARY KEY AUTO_INCREMENT not null,alumNombre varchar(15),alumCarrera varchar(15), alumTelefono int (15));
+//Primary key (Identifican de manera unica el valor en un campo, Osea que no se puede repetir el valor en toda la tabla)
+/AUTO_INCREMENT ( HACE QUE INCREMENTE CONSTANTEMENTE DE 1 EN 1)
+
+//Mostrar nuestras tablas creadas dentro de la base de datos
+show tables;
+
+//Mostrar las caracteristicas de las tablas 
+describe "nombre de la tabla";
+
+//Agregar campos a una tabla
+alter table tblCreditos add ID_Clientes int;
+
+//Eliminar campos de una tabla
+PENDIENTE
+
+//INSERTAR DATOS DENTRO DE NUESTRA TABLA
+ insert into tblalumnos (alumNombre,alumCarrera,alumTelefono) values ('Brian','ISC',322193336);
+
+// Mostrar todos los registros dentro de una tabla en especifico
+Select * from "Nombre de la tabla";
+
+// Mostrar un registro especifico dentro de una tabla
+Select from "Nombre de la tabla" where tblID = 1;
+
+//MOSTRAR UN REGISTRO DENTRO DE UNA TABLA CON MAS DE UNA CONDICION
+select * from tblalumnos where alumNombre='CARLOS' and alumCarrera='IGEM';
+
+//MOSTRAR LOS REGISTROS DE CAMPOS EN ESPEFICIFO DE UNA TABLA
+select alumNombre,alumCarrera from tblalumnos;
+
+//Actualizar los datos de nuestra tabla
+update tblalumnos set alumNombre = 'Adrian' where alumID = 1;
+
+//Hacer nulo un campo de registro en especifico dentro de una tabla
+update tblalumnos set tblNombre = null where alumID = 1;
+
+//Eliminar la fila de una tabla
+delete from tblalumnos where alumID = 1;
+
+//Elimar una tabla completa
+drop table "Nombre de la tabla" ;
+
+*******A TODO ESTO SE LE LLAMA OPERACIONES CRUD **********
+El concepto CRUD está estrechamente vinculado a la gestión de datos digitales. CRUD hace referencia a un acrónimo en el que se reúnen las primeras letras de las cuatro operaciones fundamentales de aplicaciones persistentes en sistemas de bases de datos:
+
+Create (Crear registros)
+Read bzw. Retrieve (Leer registros)
+Update (Actualizar registros)
+Delete bzw. Destroy (Borrar registros)
+
+// MOSTRAR CAMPOS DE REGRISTRO DE UNA TABLA AGRUPADOS POR ALGO EN ESPECIFICO
+select alumNombre,alumTelefono from tblalumnos group by alumCarrera;
+
+// CONTAR EL NUMERO DE REGISTROS EXISTENTES DENTRO DE UNA COLUMNA
+select count("Nombre de la columna) from "Nombre de la tabla" ;
+Ejemplo : select count(alumNombre) from tblalumnos;
+
+//CONTAR EL NUMERO DE REGISTROS EXISTENTES DENTRO DE UNA COLUMNA CON UNA INSTRUCCION ESPECIFICA
+select count("Nombre de la columna") from "Nombre de la tabla" where "Nombre de la columna="Dato en especifico";
+ Ejemplo: select count(alumNombre) from tblalumnos where alumNombre='Oscar';
+
+// Suma de datos INT de una columna
+select sum("Nombre de la columna") from Nombre de la tabla;
+Ejemplo: select sum(Donaciones) from tblalumnos;
+
+// Sacar promedio de datos dentro de una columna
+select avg("Nombre de la columna") from "Nombre de la tabla";
+Ejemplo: select avg(Calificaciones) from tblalumnos;
+
+// Mostrar el menor dato dentro de una columna
+select min("Nombre de la culumna") from "Nombre de la tabla";
+Ejemplo: select min(Promedio) from tblalumnos;
+
+// Mostrar el mayor dato dentro de una columna
+select max("Nombre de la culumna") from "Nombre de la tabla";
+Ejemplo: select min(Promedio) from tblalumnos;
+
+// Consulta anidada. Mostrar todos los alumnos con el mayor promedio
+select*from tblalumnos where alumTelefono=(select max(alumTelefono) from tblalumnos);
+
+// CREACION DE LLAVE FORANEA PARA RELACIONAR TABLAS (Estamos definiendo como llave foranea al campo ID_CLIENTES y hace referencia a la tbnCreditos en el campo ID
+alter table tblCreditos add foreign key(ID_Clientes) references tblCreditos(ID);
+
+// Consultas de datos mediante llaves foraneas
+select tblClientes.Nombre,tblClientes.Apellidos,tblClientes.Telefono,tblCreditos.Fecha,tblCreditos.Cantidad from tblClientes inner join tblCreditos on tblClientes.ID=tblCreditos.ID_Clientes where ID_Clientes=1;
+(El inner join permite emparejar filas de distintas tablas de forma más eficiente) ( on nos dice que solo donde coinciden las ID de ambas tablas)
